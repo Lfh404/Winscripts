@@ -5,8 +5,11 @@ from urllib.parse import urljoin
 BASE_URL = 'https://dashboard.cpolar.com'
 LOGIN_URL = urljoin(BASE_URL, '/login')
 STATUS_URL = urljoin(BASE_URL, '/status')
-USERNAME = 'mixinju123@163.com'
-PASSWORD = '7758521MXJ'
+
+# USERNAME = 'mixinju123@163.com'
+# PASSWORD = '7758521MXJ'
+USERNAME = '2597035903@qq.com'
+PASSWORD = '11111111'
 # csrf_token = '1538662349.68##b5aa35f374452a6198004dab20d88b13583c7c2c'
 
 session = requests.Session()
@@ -26,9 +29,9 @@ text = BeautifulSoup(resp_text, 'html.parser')
 tunnels = []
 tables = text.select("tr")
 for td in tables:
-	if(td.text.find("ntu") != -1):
+	if(td.text.find("310") != -1):
 		lines = td.text.splitlines()
-		tunnel = "Host lab"
+		tunnel = "Host gpu"
 		if (lines[1] == "ntu310-1"):
 			tunnel += "1\n"
 		else:
@@ -38,6 +41,17 @@ for td in tables:
 		tunnel += "  Port " + lines[2].split(':')[2] + "\n"
 		tunnels.append(tunnel)
 
+tunnel = "Host lab1\n"
+tunnel += "  HostName 192.168.31.178\n"
+tunnel += "  User lei\n"
+tunnel += "  Port 22\n"
+tunnels.append(tunnel)
+
+tunnel = "Host lab2\n"
+tunnel += "  HostName 192.168.31.171\n"
+tunnel += "  User lei\n"
+tunnel += "  Port 22\n"
+tunnels.append(tunnel)
 # print(tunnels)	
 # print(len(tables))
 # print(tables)
