@@ -1,4 +1,5 @@
 import requests
+import argparse
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
 
@@ -11,6 +12,10 @@ STATUS_URL = urljoin(BASE_URL, '/status')
 USERNAME = '2597035903@qq.com'
 PASSWORD = '11111111'
 # csrf_token = '1538662349.68##b5aa35f374452a6198004dab20d88b13583c7c2c'
+
+parser = argparse.ArgumentParser(description='ssh remote hostname')
+parser.add_argument("-r", action="store_true", help="choose cpolar hostname")
+args = parser.parse_args()
 
 session = requests.Session()
 
@@ -31,7 +36,7 @@ tables = text.select("tr")
 for td in tables:
 	if(td.text.find("310") != -1):
 		lines = td.text.splitlines()
-		tunnel = "Host gpu"
+		tunnel = "Host lab"
 		if (lines[1] == "ntu310-1"):
 			tunnel += "1\n"
 		else:
@@ -39,19 +44,33 @@ for td in tables:
 		tunnel += "  HostName " + lines[2].split(':')[1][2:] + "\n"
 		tunnel += "  User lei\n"
 		tunnel += "  Port " + lines[2].split(':')[2] + "\n"
-		tunnels.append(tunnel)
+		if args.r:
+			tunnels.append(tunnel)
 
-tunnel = "Host lab1\n"
-tunnel += "  HostName 192.168.31.178\n"
-tunnel += "  User lei\n"
-tunnel += "  Port 22\n"
-tunnels.append(tunnel)
+if args.r == False:
+	tunnel = "Host lab1\n"
+	tunnel += "  HostName 10.80.15.186\n"
+	tunnel += "  User lei\n"
+	tunnel += "  Port 7758\n"
+	tunnels.append(tunnel)
 
-tunnel = "Host lab2\n"
-tunnel += "  HostName 192.168.31.171\n"
-tunnel += "  User lei\n"
-tunnel += "  Port 22\n"
-tunnels.append(tunnel)
+	tunnel = "host lab2\n"
+	tunnel += "  hostname 10.80.15.186\n"
+	tunnel += "  user lei\n"
+	tunnel += "  port 7759\n"
+	tunnels.append(tunnel)
+
+# tunnel = "host lab2\n"
+# tunnel += "  HostName 192.168.31.171\n"
+# tunnel += "  User lei\n"
+# tunnel += "  Port 22\n"
+# tunnels.append(tunnel)
+
+# tunnel = "Host lab2\n"
+# tunnel += "  HostName 192.168.31.171\n"
+# tunnel += "  User lei\n"
+# tunnel += "  Port 22\n"
+# tunnels.append(tunnel)
 # print(tunnels)	
 # print(len(tables))
 # print(tables)
