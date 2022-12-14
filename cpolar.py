@@ -87,6 +87,7 @@ response_status.close()  #关掉resp
 with open('C:\\Users\\lei\\.ssh\\config', 'w') as f:
     for tunnel in tunnels:
         print(tunnel, file=f)
+    print('TCPKeepAlive yes\nServerAliveInterval 60\nServerAliveCountMax 20', file=f)
 
 
 # import requests
